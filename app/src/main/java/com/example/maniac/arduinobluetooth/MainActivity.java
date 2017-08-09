@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 toConnect.putExtra("dName",arrayDeviceName[i]);
                 toConnect.putExtra("dAdd",arrayDeviceAdd[i]);
                 startActivity(toConnect);
-                //establishClientConnection();
             }
 
         });

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -20,10 +21,11 @@ public class DeviceSummary extends AppCompatActivity {
 
     //defining Bluetooth Adapter:
     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-    //String address = "00:21:13:01:45:9C";
-    String address = "75:C1:D0:6E:D4:6C";
+    String address = "00:21:13:01:45:9C";
+//    String address = "75:C1:D0:6E:D4:6C";  //Artis
+    //String address = "C0:EE:FB:55:E4:C5"; //ONEPLUS
     //defining Bluetooth Device:
-    BluetoothDevice device = adapter.getRemoteDevice(address);;
+    BluetoothDevice device = adapter.getRemoteDevice(address);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,9 @@ public class DeviceSummary extends AppCompatActivity {
         displayDeviceName.setText(fetchDeviceName);
         displayDeviceAdd.setText(fetchDeviceAdd);
 
-        establishClientConnection();
     }
 
-    public void establishClientConnection(){
+    public void establishClientConnection(View view){
         Log.d("Debug:","Cancelling Discovery before attempt connection");
         adapter.cancelDiscovery();
         Log.d("Debug","establishClientConnection complete");
