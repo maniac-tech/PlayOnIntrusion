@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DeviceSummary"></activity>
+        <activity android:name=".DeviceSummary" />
+        <activity android:name=".ReadData"></activity>
     </application>
 
 </manifest>
