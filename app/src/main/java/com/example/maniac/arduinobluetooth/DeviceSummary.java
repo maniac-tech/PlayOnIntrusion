@@ -1,17 +1,21 @@
 package com.example.maniac.arduinobluetooth;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -41,6 +45,7 @@ public class DeviceSummary extends AppCompatActivity {
     //defining Bluetooth Device:
 
 
+
     Intent dataActivity = new Intent(DeviceSummary.this, ReadData.class);
 
     @Override
@@ -48,13 +53,21 @@ public class DeviceSummary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_summary);
 
+
+
         videoView=(VideoView)findViewById(R.id.videoView);
 
         //specify the location of media file
         Uri uri= Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/WhatsApp/Media/WhatsApp Video/1.mp4");
-
+//Creating MediaController
+        MediaController mediaController = new MediaController(this);
+        mediaController.setAnchorView(videoView);
+        //Setting MediaController and URI, then starting the videoView
+        videoView.setMediaController(mediaController);
         videoView.setVideoURI(uri);
-
+        videoView.requestFocus();
+        videoView.seekTo(25000);
+        videoView.getDuration();
         displayDeviceName = (TextView)findViewById(R.id.textView5);
         displayDeviceAdd = (TextView)findViewById(R.id.textView6);
 
@@ -225,10 +238,12 @@ public class DeviceSummary extends AppCompatActivity {
                     //int tmp = Integer.parseInt(msgReceived);
                     if (index!=-1){
                         Log.d("ALERT","FREEZE FOR 30SEC");
+                        videoView.start();
                     }
                     else{
                         Log.d("INPUT READ","DATA READ.");
                         //Log.d("INPUT READ",msgReceived);
+                        //videoView.stopPlayback();
                     }
                 } catch (IOException e) {
                     Log.d(TAG, "Input stream was disconnected", e);
