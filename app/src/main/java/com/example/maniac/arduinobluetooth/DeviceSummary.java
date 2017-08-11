@@ -4,6 +4,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import org.w3c.dom.Text;
 
@@ -22,6 +25,7 @@ import java.util.UUID;
 public class DeviceSummary extends AppCompatActivity {
     TextView displayDeviceName;
     TextView displayDeviceAdd;
+    VideoView videoView ;
 
     String address = "00:21:13:01:45:9C";
 
@@ -43,6 +47,13 @@ public class DeviceSummary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_summary);
+
+        videoView=(VideoView)findViewById(R.id.videoView);
+
+        //specify the location of media file
+        Uri uri= Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/WhatsApp/Media/WhatsApp Video/1.mp4");
+
+        videoView.setVideoURI(uri);
 
         displayDeviceName = (TextView)findViewById(R.id.textView5);
         displayDeviceAdd = (TextView)findViewById(R.id.textView6);
@@ -209,8 +220,16 @@ public class DeviceSummary extends AppCompatActivity {
                     final String msgReceived = String.valueOf(numBytes) +
                             " bytes received:\n"
                             + strReceived;
-                    Log.d("ANSWER",msgReceived);
-                    Log.d("INPUT READ","DATA READ.");
+                    Log.d("STR RECEIVED",strReceived);
+                    int index = strReceived.indexOf("-");
+                    //int tmp = Integer.parseInt(msgReceived);
+                    if (index!=-1){
+                        Log.d("ALERT","FREEZE FOR 30SEC");
+                    }
+                    else{
+                        Log.d("INPUT READ","DATA READ.");
+                        //Log.d("INPUT READ",msgReceived);
+                    }
                 } catch (IOException e) {
                     Log.d(TAG, "Input stream was disconnected", e);
                     break;
