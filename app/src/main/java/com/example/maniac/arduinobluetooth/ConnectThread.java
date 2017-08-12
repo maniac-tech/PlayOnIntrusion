@@ -17,7 +17,7 @@ class ConnectThread extends Thread {
     //Creating BluetoothAdapter:
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-    private BluetoothSocket mmSocket;
+    BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
 
     public ConnectThread(BluetoothDevice device) {
@@ -74,9 +74,9 @@ class ConnectThread extends Thread {
             // the connection in a separate thread.
 
         }
-        Log.d("Data Debug","ConnectedThread object will start");
-        ConnectedThread dataLayegaYe = new ConnectedThread(mmSocket);
-        Log.d("Data Debug","ConnectedThread object created");
+        //Log.d("Data Debug","ConnectedThread object will start");
+        //ConnectedThread dataLayegaYe = new ConnectedThread(mmSocket);
+        //Log.d("Data Debug","ConnectedThread object created");
         //dataLayegaYe.run();
     }
 

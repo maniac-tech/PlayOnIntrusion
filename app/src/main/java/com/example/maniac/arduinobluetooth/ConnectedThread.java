@@ -1,8 +1,6 @@
 package com.example.maniac.arduinobluetooth;
 
 import android.bluetooth.BluetoothSocket;
-import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.widget.VideoView;
 
