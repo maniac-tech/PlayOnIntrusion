@@ -3,6 +3,7 @@ package com.example.maniac.arduinobluetooth;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.util.Log;
 
 import java.io.IOException;
@@ -74,10 +75,6 @@ class ConnectThread extends Thread {
             // the connection in a separate thread.
 
         }
-        //Log.d("Data Debug","ConnectedThread object will start");
-        //ConnectedThread dataLayegaYe = new ConnectedThread(mmSocket);
-        //Log.d("Data Debug","ConnectedThread object created");
-        //dataLayegaYe.run();
     }
 
     // Closes the client socket and causes the thread to finish.
