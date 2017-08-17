@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -32,23 +33,16 @@ public class DeviceSummary extends AppCompatActivity {
     //BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     //BluetoothDevice device = adapter.getRemoteDevice(address);
 
-    BluetoothAdapter adapter ;
-    BluetoothDevice device ;
-    BluetoothSocket tempmmSocket;
-
-
-    public DeviceSummary(){
-        MainActivity ma = new MainActivity();
-        adapter = ma.adapter;
-        device = ma.device;
-        ConnectThread ct = new ConnectThread(device);
-        //tempmmSocket = ct.mmSocket;
-    }
-
-    VideoView videoView ;
-
     String address = "00:21:13:01:45:9C";
 
+    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter() ;
+    BluetoothDevice device = adapter.getRemoteDevice(address);
+
+    UUID MY_UUID=UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    BluetoothSocket tempmmSocket;
+
+    VideoView videoView ;
+    Button loadStream;
 
     private static final String TAG = "MY_APP_DEBUG_TAG";
 
@@ -60,6 +54,8 @@ public class DeviceSummary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_summary);
+
+        loadStream = (Button)findViewById(R.id.button4);
 
         videoView=(VideoView)findViewById(R.id.videoView);
 
@@ -77,16 +73,22 @@ public class DeviceSummary extends AppCompatActivity {
         videoView.seekTo(25000);
         videoView.getDuration();
 
-       // ConnectedThread data = new ConnectedThread();
-    }
+        loadStream.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    tempmmSocket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+                } catch (IOException e){
+                    Log.e("Connect Thread-line 34", "Socket's create() method failed", e);
+                }
+                ConnectThread ct = new ConnectThread(device);
+                ct.run();
+                ConnectedThread data12 = new ConnectedThread(tempmmSocket);
+                data12.run();
+            }
+        });
 
-    public void establishClientConnection(View view){
-        Log.d("Debug:","Cancelling Discovery before attempt connection");
-        adapter.cancelDiscovery();
-        Log.d("Debug","establishClientConnection complete");
-        ConnectThread client = new ConnectThread(device);
-        Log.d("Debug","ConnectThread object ready");
-        client.run();
+
     }
 
 }
