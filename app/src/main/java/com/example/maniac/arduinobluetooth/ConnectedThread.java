@@ -37,7 +37,7 @@ class ConnectedThread extends Thread {
         // member streams are final.
         try {
             tmpIn = socket.getInputStream();
-            Log.d("ConnectedThread","InputStrean created");
+            Log.d("ConnectedThread","InputStream created");
         } catch (IOException e) {
             Log.e(TAG, "Error occurred when creating input stream", e);
         }
@@ -52,7 +52,7 @@ class ConnectedThread extends Thread {
         mmOutStream = tmpOut;
     }
 
-    public void run(VideoView videoView) {
+    public void run() {
         mmBuffer = new byte[1024];
         int numBytes; // bytes returned from read()
 
@@ -74,7 +74,7 @@ class ConnectedThread extends Thread {
                 //int tmp = Integer.parseInt(msgReceived);
                 if (index!=-1){
                     Log.d("ALERT","FREEZE FOR 30SEC");
-                    videoView.start();
+                    //videoView.start();
                 }
                 else{
                     Log.d("INPUT READ","DATA READ.");
