@@ -17,20 +17,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-
 public class MainActivity extends AppCompatActivity {
 
-    //defining Bluetooth Adapter:
+    //Bluetooth variables:
     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-
-    //defining Bluetooth Device:
     BluetoothDevice device;
 
     private static final String TAG = "Debug";
     private Handler mHandler; // handler that gets info from Bluetooth service
-
-
-    //ConnectedThread data = new ConnectedThread(client.mmSocket);
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -44,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         managePermissions();
-
-
     }
 
     //Funtion responsible for checking Permissions on Runtime:
@@ -86,15 +78,18 @@ public class MainActivity extends AppCompatActivity {
 
     //Function responsible for establishing connection to nearby Bluetooth Devices:
     public void establishClientConnection(View view){
+
         Log.d("Debug:","Cancelling Discovery before attempt connection");
+
         adapter.cancelDiscovery();
         Log.d("Debug","establishClientConnection complete");
 
         Log.d("Debug","ConnectThread object ready");
-        Intent switchScreen = new Intent(MainActivity.this,DeviceSummary.class);
+/*
         ConnectThread client = new ConnectThread(device);
         client.run();
-        //data.run();
+*/
+        Intent switchScreen = new Intent(MainActivity.this,DeviceSummary.class);
         startActivity(switchScreen);
     }
 
