@@ -3,7 +3,6 @@ package com.example.maniac.arduinobluetooth;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 import android.widget.VideoView;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,14 +10,6 @@ import java.io.OutputStream;
 /**
  * Created by maniac on 8/12/2017.
  */
-
-interface MessageConstants {
-    public static final int MESSAGE_READ = 0;
-    public static final int MESSAGE_WRITE = 1;
-    public static final int MESSAGE_TOAST = 2;
-
-    // ... (Add other message types here as needed.)
-}
 
 class ConnectedThread extends Thread {
     private final BluetoothSocket mmSocket;
@@ -52,7 +43,7 @@ class ConnectedThread extends Thread {
         mmOutStream = tmpOut;
     }
 
-    public void run() {
+    public void run(VideoView videoView) {
         mmBuffer = new byte[1024];
         int numBytes; // bytes returned from read()
 
@@ -61,20 +52,17 @@ class ConnectedThread extends Thread {
             try {
                 // Read from the InputStream.
                 numBytes = mmInStream.read(mmBuffer);
-                // Send the obtained bytes to the UI activity.
-                //Message readMsg = mHandler.obtainMessage(MessageConstants.MESSAGE_READ, numBytes, -1,mmBuffer);
-                //readMsg.sendToTarget();
 
                 String strReceived = new String(mmBuffer, 0, numBytes);
                 final String msgReceived = String.valueOf(numBytes) +
                         " bytes received:\n"
                         + strReceived;
-                Log.d("STR RECEIVED",strReceived);
+                //Log.d("STR RECEIVED",strReceived);
                 int index = strReceived.indexOf("-");
                 //int tmp = Integer.parseInt(msgReceived);
                 if (index!=-1){
                     Log.d("ALERT","FREEZE FOR 30SEC");
-                    //videoView.start();
+                    videoView.start();
                 }
                 else{
                     Log.d("INPUT READ","DATA READ.");
