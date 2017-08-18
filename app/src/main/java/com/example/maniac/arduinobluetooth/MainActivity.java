@@ -80,11 +80,8 @@ public class MainActivity extends AppCompatActivity {
     public void establishClientConnection(View view){
 
         Log.d("Debug:","Cancelling Discovery before attempt connection");
-
         adapter.cancelDiscovery();
-        Log.d("Debug","establishClientConnection complete");
 
-        Log.d("Debug","ConnectThread object ready");
 /*
         ConnectThread client = new ConnectThread(device);
         client.run();
