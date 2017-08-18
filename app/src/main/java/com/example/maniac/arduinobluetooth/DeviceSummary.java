@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,26 +30,23 @@ import java.util.UUID;
 
 public class DeviceSummary extends AppCompatActivity {
 
-    //defining Bluetooth Adapter:
-    //BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-    //BluetoothDevice device = adapter.getRemoteDevice(address);
-
-    String address = "00:21:13:01:45:9C";
-
-    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter() ;
-    BluetoothDevice device = adapter.getRemoteDevice(address);
-
     UUID MY_UUID=UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    BluetoothSocket tempmmSocket;
-
-    VideoView videoView ;
-    Button loadStream;
-
-    private static final String TAG = "MY_APP_DEBUG_TAG";
-
-    private Handler mHandler; // handler that gets info from Bluetooth service
+    String address = "00:21:13:01:45:9C"; //address of bluetooth module connected to arduino
     //String address = "75:C1:D0:6E:D4:6C";  //Artis
     //String address = "C0:EE:FB:55:E4:C5"; //ONEPLUS
+
+    //Bluetooth variables:
+    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter() ;
+    BluetoothDevice device = adapter.getRemoteDevice(address);
+    BluetoothSocket tempmmSocket;
+
+    int parentWidth=0;
+    //UI variables:
+    VideoView videoView ;
+
+    Button loadStream;
+    //Other variables
+    int parentHeight=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,6 @@ public class DeviceSummary extends AppCompatActivity {
         setContentView(R.layout.activity_device_summary);
 
         loadStream = (Button)findViewById(R.id.button4);
-
         videoView=(VideoView)findViewById(R.id.videoView);
 
         //specify the location of media file
@@ -81,14 +78,30 @@ public class DeviceSummary extends AppCompatActivity {
                 } catch (IOException e){
                     Log.e("Connect Thread-line 34", "Socket's create() method failed", e);
                 }
+                getValues();
+                videoView.getLayoutParams().height = parentHeight;
+                videoView.getLayoutParams().width = parentWidth;
+                videoView.requestLayout();
+                Log.d("ConnectThread","Creating object");
                 ConnectThread ct = new ConnectThread(device);
+                Log.d("ConnectThread","Object created");
+                Log.d("exp",ct.mmSocket.toString());
                 ct.run();
-                ConnectedThread data12 = new ConnectedThread(tempmmSocket);
-                data12.run();
+                Log.d("ConnectThread","Function run complete");
+                Log.d("ConnectedThread","Creating object");
+                ConnectedThread data12 = new ConnectedThread(ct.mmSocket);
+                data12.run(videoView);
+                Log.d("ConnectedThread","Function run complete");
             }
         });
 
 
+    }
+
+    public void getValues(){
+        ConstraintLayout parent = (ConstraintLayout)findViewById(R.id.constrainedLayout);
+        parentHeight = parent.getHeight();
+        parentWidth = parent.getWidth();
     }
 
 }
