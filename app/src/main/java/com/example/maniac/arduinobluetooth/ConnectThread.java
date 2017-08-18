@@ -3,9 +3,7 @@ package com.example.maniac.arduinobluetooth;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
 import android.util.Log;
-
 import java.io.IOException;
 import java.util.UUID;
 
@@ -15,9 +13,8 @@ import java.util.UUID;
 
 class ConnectThread extends Thread {
 
-    //Creating BluetoothAdapter:
+    //Bluetooth variables:
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
     BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
 
