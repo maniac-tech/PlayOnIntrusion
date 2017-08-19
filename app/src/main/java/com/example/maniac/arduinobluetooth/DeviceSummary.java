@@ -57,8 +57,8 @@ public class DeviceSummary extends AppCompatActivity {
         videoView=(VideoView)findViewById(R.id.videoView);
 
         //specify the location of media file
-        Uri uri= Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/WhatsApp/Media/WhatsApp Video/1.mp4");
-
+//        Uri uri= Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/WhatsApp/Media/WhatsApp Video/1.mp4");
+        Uri uri= Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/1.mp4");
         //Creating MediaController
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
@@ -67,7 +67,7 @@ public class DeviceSummary extends AppCompatActivity {
         videoView.setMediaController(mediaController);
         videoView.setVideoURI(uri);
         videoView.requestFocus();
-        videoView.seekTo(25000);
+        videoView.seekTo(000);
         videoView.getDuration();
 
         loadStream.setOnClickListener(new View.OnClickListener() {
